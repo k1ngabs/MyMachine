@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,7 @@
 
     </main>
     <aside>
-        
+
     </aside>
 </body>
 </html>
