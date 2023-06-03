@@ -1,0 +1,1 @@
+SELECT user WHERE username = '$loginInput' OR email = '$loginInput'
