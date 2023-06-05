@@ -52,4 +52,14 @@ function readUser($connect, $userId){
         echo 'ERROR:'. $e->getMessage();
     }
 }
+
+function updateUser($connect, $inputArray){
+    try{
+        $query = $connect->prepare('update user set username = ?, email = ?, password = ? where userId = ?');
+        $update = $query->execute($inputArray);
+        return $update;
+    }catch(PDOException $e){
+            echo 'ERROR:'. $e->getMessage();
+    }
+}
 ?>
