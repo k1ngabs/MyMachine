@@ -20,10 +20,21 @@ if(isset($_POST['login'])){
         $userLogged= userVerify($connect, $user); 
         session_start();
         $_SESSION['loggedIn'] = true;
-        $_SESSION[''];
+        $_SESSION['userId'] =$userLogged;
     }else{
-        echo'senha invalida';
+        echo'Senha ou Usuário inválido.';
+    }
+}
+
+#Logout
+    if(isset($_POST['logout'])){
+        session_start();
+        session_destroy();
     }
 
-}
+#Delete User
+    if(isset($_POST['deleteUser'])){
+        $userId = $_SESSION['userId'];
+        deleteUser($connect, $userId);
+    }
 ?>

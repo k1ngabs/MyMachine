@@ -33,4 +33,23 @@ function userVerify($connect, $user){
     }
 }
 
+function deleteUser($connect, $userId){
+    try{
+        $query = $connect->prepare("delete from user where userId = ?");
+        $delete = $query->execute($userId);
+        return $delete;
+    }catch(PDOException $e){
+        echo 'ERROR:'. $e->getMessage();
+    }
+}
+
+function readUser($connect, $userId){
+    try{
+        $query = $connect->prepare('select * from user where userId = ?');
+        $user  = $query->execute($userId);
+        return $user;
+    }catch(PDOException $e){
+        echo 'ERROR:'. $e->getMessage();
+    }
+}
 ?>
