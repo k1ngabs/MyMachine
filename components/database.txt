@@ -1,1 +1,73 @@
+CREATE DATABASE MyMachine;
+
+USE MyMachine;
+
+CREATE TABLE user (
+    userId INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    imagem VARCHAR(255) DEFAULT 'avatar.svg',
+    regDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    verified BOOLEAN DEFAULT FALSE,
+    admin BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE category (
+    idCat INT AUTO_INCREMENT PRIMARY KEY,
+    categoryName VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE product (
+    prodId INT AUTO_INCREMENT PRIMARY KEY,
+    productName VARCHAR(255) NOT NULL,
+    prodCat INT,
+    FOREIGN KEY (prodCat) REFERENCES category (idCat)
+);
+
+CREATE TABLE links (
+    linkId INT AUTO_INCREMENT PRIMARY KEY,
+    prodId INT,
+    value FLOAT,
+    linkUrl VARCHAR(255) NOT NULL,
+    FOREIGN KEY (prodId) REFERENCES product (prodId)
+);
+
+CREATE TABLE lists (
+    listId INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT,
+    cpu INT,
+    motherboard INT,
+    ram1 INT,
+    ram2 INT,
+    ram3 INT,
+    ram4 INT,
+    gpu INT,
+    storage1 INT,
+    storage2 INT,
+    storage3 INT,
+    storage4 INT,
+    powersupply INT,
+    cpucooler INT,
+    case INT,
+    FOREIGN KEY (userId) REFERENCES user (userId),
+    FOREIGN KEY (cpu) REFERENCES product (prodId),
+    FOREIGN KEY (motherboard) REFERENCES product (prodId),
+    FOREIGN KEY (ram1) REFERENCES product (prodId),
+    FOREIGN KEY (ram2) REFERENCES product (prodId),
+    FOREIGN KEY (ram3) REFERENCES product (prodId),
+    FOREIGN KEY (ram4) REFERENCES product (prodId),
+    FOREIGN KEY (gpu) REFERENCES product (prodId),
+    FOREIGN KEY (storage1) REFERENCES product (prodId),
+    FOREIGN KEY (storage2) REFERENCES product (prodId),
+    FOREIGN KEY (storage3) REFERENCES product (prodId),
+    FOREIGN KEY (storage4) REFERENCES product (prodId),
+    FOREIGN KEY (powersupply) REFERENCES product (prodId),
+    FOREIGN KEY (cpucooler) REFERENCES product (prodId),
+    FOREIGN KEY (case) REFERENCES product (prodId)
+);
+
+
+
+
+Random Commands
 SELECT user WHERE username = '$loginInput' OR email = '$loginInput'
