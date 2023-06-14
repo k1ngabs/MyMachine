@@ -6,7 +6,7 @@ CREATE TABLE user (
     userId INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    imagem VARCHAR(255) DEFAULT 'avatar.svg',
+    imagem VARCHAR(255) DEFAULT '266033.svg',
     regDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     verified BOOLEAN DEFAULT FALSE,
     admin BOOLEAN DEFAULT FALSE
@@ -27,7 +27,7 @@ CREATE TABLE product (
 CREATE TABLE links (
     linkId INT AUTO_INCREMENT PRIMARY KEY,
     prodId INT,
-    value FLOAT,
+    price FLOAT,
     linkUrl VARCHAR(255) NOT NULL,
     FOREIGN KEY (prodId) REFERENCES product (prodId)
 );
@@ -35,39 +35,22 @@ CREATE TABLE links (
 CREATE TABLE lists (
     listId INT AUTO_INCREMENT PRIMARY KEY,
     userId INT,
-    cpu INT,
-    motherboard INT,
-    ram1 INT,
-    ram2 INT,
-    ram3 INT,
-    ram4 INT,
-    gpu INT,
-    storage1 INT,
-    storage2 INT,
-    storage3 INT,
-    storage4 INT,
-    powersupply INT,
-    cpucooler INT,
-    case INT,
-    FOREIGN KEY (userId) REFERENCES user (userId),
-    FOREIGN KEY (cpu) REFERENCES product (prodId),
-    FOREIGN KEY (motherboard) REFERENCES product (prodId),
-    FOREIGN KEY (ram1) REFERENCES product (prodId),
-    FOREIGN KEY (ram2) REFERENCES product (prodId),
-    FOREIGN KEY (ram3) REFERENCES product (prodId),
-    FOREIGN KEY (ram4) REFERENCES product (prodId),
-    FOREIGN KEY (gpu) REFERENCES product (prodId),
-    FOREIGN KEY (storage1) REFERENCES product (prodId),
-    FOREIGN KEY (storage2) REFERENCES product (prodId),
-    FOREIGN KEY (storage3) REFERENCES product (prodId),
-    FOREIGN KEY (storage4) REFERENCES product (prodId),
-    FOREIGN KEY (powersupply) REFERENCES product (prodId),
-    FOREIGN KEY (cpucooler) REFERENCES product (prodId),
-    FOREIGN KEY (case) REFERENCES product (prodId)
+   FOREIGN KEY (userId) REFERENCES user (userId)
 );
 
+CREATE TABLE prodList(
+    prodId INT,
+    listId INT,
+    PRIMARY KEY(prodId, listId),
+    FOREIGN KEY(prodId) REFERENCES product (prodId),
+    FOREIGN KEY (listId) REFERENCES lists (listId)
+)
 
-
+CREATE TABLE imgsProd(
+    imgName VARCHAR(255) PRIMARY KEY,
+    prodId INT,
+    FOREIGN KEY (prodId) REFERENCES product (prodId)
+)
 
 Random Commands
 SELECT user WHERE username = '$loginInput' OR email = '$loginInput'

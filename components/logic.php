@@ -23,6 +23,7 @@ if(isset($_POST['login'])){
         session_start();
         $_SESSION['loggedIn'] = true;
         $_SESSION['userId'] = $userLogged;
+        header('location: ./index.php');
     }else{
         echo'Senha ou Usuário inválido.';
     }
