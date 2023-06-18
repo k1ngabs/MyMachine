@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+$loginDiv = file_get_contents('./login.html');
+$accountDiv = file_get_contents('./userAccount.html');
+$adminDiv = file_get_contents('./adminLink.html');
 
 ?>
 <!DOCTYPE html>
@@ -27,34 +29,38 @@ session_start();
       <div class="layout">
       <div id="sidenav" class="sidenav">
         <?php
+        #Login Handler
         if(!isset($_SESSION['loggedIn'])){
-          include('login.html');
+          echo $loginDiv;
         }else{
-          include('userAccount.html');
+          echo $accountDiv;
+        }
+        if(isset($_SESSION['admin'])){
+          echo $adminLink;
         }
         ?>
       </div>
       <main id="main">
-        <div>
+        <div id="content">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis debitis
           sit eius provident libero quidem minima vero doloremque earum porro,
           quaerat molestiae sunt consectetur nostrum facilis. Nesciunt
           repellendus voluptatibus esse?
         </div>
-        <div>
+        <div id="content">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis debitis
           sit eius provident libero quidem minima vero doloremque earum porro,
           quaerat molestiae sunt consectetur nostrum facilis. Nesciunt
           repellendus voluptatibus esse?
         </div>
-        <div>
+        <div id="content">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis debitis
           sit eius provident libero quidem minima vero doloremque earum porro,
           quaerat molestiae sunt consectetur nostrum facilis. Nesciunt
           repellendus voluptatibus esse?
         </div>
       </main>
-      <aside id="aside">
+    <aside id="aside, content">
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis debitis
           sit eius provident libero quidem minima vero doloremque earum porro,

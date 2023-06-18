@@ -2,7 +2,7 @@ CREATE DATABASE MyMachine;
 
 USE MyMachine;
 
-CREATE TABLE user (
+CREATE TABLE users (
     userId INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -34,8 +34,8 @@ CREATE TABLE links (
 
 CREATE TABLE lists (
     listId INT AUTO_INCREMENT PRIMARY KEY,
-    userId INT,
-   FOREIGN KEY (userId) REFERENCES user (userId)
+    userId INT UNSIGNED,
+   FOREIGN KEY (userId) REFERENCES users (userId)
 );
 
 CREATE TABLE prodList(
@@ -44,13 +44,15 @@ CREATE TABLE prodList(
     PRIMARY KEY(prodId, listId),
     FOREIGN KEY(prodId) REFERENCES product (prodId),
     FOREIGN KEY (listId) REFERENCES lists (listId)
-)
+);
 
 CREATE TABLE imgsProd(
     imgName VARCHAR(255) PRIMARY KEY,
     prodId INT,
     FOREIGN KEY (prodId) REFERENCES product (prodId)
-)
+);
+
+
 
 Random Commands
 SELECT user WHERE username = '$loginInput' OR email = '$loginInput'

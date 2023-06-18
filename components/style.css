@@ -6,27 +6,31 @@ body {
   padding: 0px;
   border: 0px;
   font-family: "Poppins", sans-serif;
-  background-color: white;
+  background-color: rgb(255, 245, 227);
   color: black;
 }
+
 .layout {
   display: flex;
   flex-direction: row;
 }
-@media screen and (min-width:1024px){}
-@media screen and (min-width:767px) and (max-width:1023px){}
-@media screen and (max-width:766px){}
+@media screen and (min-width: 1024px) {
+}
+@media screen and (min-width: 767px) and (max-width: 1023px) {
+}
+@media screen and (max-width: 766px) {
+}
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 24px;
-    color: white;
-    text-shadow: rgba(0, 0, 0) 15px;
-    padding: 5px;
-    width: 100%;
-    background-color: #c21c3a;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
+  color: white;
+  text-shadow: rgba(0, 0, 0) 15px;
+  padding: 5px;
+  width: 100%;
+  background-color: #c21c3a;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   flex-wrap: wrap;
 }
 .search {
@@ -35,9 +39,9 @@ body {
   align-items: center;
   position: relative;
   max-width: 100vh;
- }
- 
- .searchBar {
+}
+
+.searchBar {
   width: 25vh;
   height: 30px;
   line-height: 28px;
@@ -48,27 +52,28 @@ body {
   outline: none;
   background-color: #f3f3f4;
   color: #0d0c22;
-  transition: .3s ease;
- }
- 
- .searchBar::placeholder {
+  transition: 0.3s ease;
+}
+
+.searchBar::placeholder {
   color: #9e9ea7;
- }
- 
- .searchBar:focus, input:hover {
+}
+
+.searchBar:focus,
+input:hover {
   outline: none;
-  border-color: rgba(234,76,137,0.4);
+  border-color: rgba(234, 76, 137, 0.4);
   background-color: #fff;
   box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
- }
- 
- .icon {
+}
+
+.icon {
   position: right;
   left: 1rem;
   fill: #9e9ea7;
   width: 1rem;
   height: 1rem;
- }
+}
 
 .sidenav {
   flex-wrap: wrap;
@@ -98,7 +103,7 @@ aside {
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
-.dark-mode {
-  background-color: black;
+.darkMode {
+  background-color: rgb(66, 66, 66);
   color: white;
 }
