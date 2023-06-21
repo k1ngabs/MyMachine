@@ -11,19 +11,21 @@ if(isset($_POST['signup'])){
     $password = password_hash($crudePassword, PASSWORD_DEFAULT);
     $array = array($user, $email, $password);
     signUp($connect, $array);
+    header('location: /mymachine/index.php');
 }
 
 #User Login
 if(isset($_POST['login'])){
     $user= $_POST['loginInput'];
     $password= $_POST['password'];
-    $hash= passwordVerify($connect,$user);
-    if(password_verify($password,$hash)){
-        $userLogged= userVerify($connect, $user); 
+    $hashVetor= passwordVerify($connect,$user);
+    if(password_verify($password,$hashVetor['password'])){
+        $userLogged= $hashVetor['userId'];
         session_start();
         $_SESSION['loggedIn'] = true;
         $_SESSION['userId'] = $userLogged;
-        header('location: ./index.php');
+        $_SESSION['admin'] = $hashVetor['admin'];
+       header('location: /mymachine/index.php');  
     }else{
         echo'Senha ou Usuário inválido.';
     }
@@ -36,12 +38,12 @@ if(isset($_POST['login'])){
     }
 
     
-#Read User
-    if(isset($_SESSION['userId'])){
-        $userId = $_SESSION['userId'];
-        $infoArray = readUser($connect, $userId);
-        #TERMINAR#
-    }
+// #Read User
+//     if(isset($_SESSION['userId'])){
+//         $userId = $_SESSION['userId'];
+//         $infoArray = readUser($connect, $userId);
+//         #TERMINAR#
+//     }
     
 #Update User
     if(isset($_POST['updateUser'])){
@@ -69,12 +71,12 @@ if(isset($_POST['login'])){
         insertProd($connect, $prodArray);
     }
 
-#Read Product
-    if(isset($_POST['searchProd'])){
-        $prodName = $_POST['search'];
-        $infoArray = readUser($connect, $prodName);
-        #TERMINAR#
-    }
+// #Read Product
+//     if(isset($_POST['searchProd'])){
+//         $prodName = $_POST['search'];
+//         $infoArray = readUser($connect, $prodName);
+//         #TERMINAR#
+//     }
 
 #Update Product
     if(isset($_POST['updateProd'])){

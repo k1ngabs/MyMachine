@@ -4,6 +4,7 @@ USE MyMachine;
 
 CREATE TABLE users (
     userId INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     imagem VARCHAR(255) DEFAULT '266033.svg',

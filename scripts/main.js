@@ -5,6 +5,6 @@ var aside = document.getElementById("aside");
 
 
 function darkmode() {
-    var element = document.body;
-    element.classList.toggle("darkMode");
+    var body = document.body;
+    body.classList.toggle("darkMode");
   } 
