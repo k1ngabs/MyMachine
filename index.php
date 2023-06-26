@@ -3,7 +3,6 @@ session_start();
 $loginDiv = file_get_contents('./login.html');
 $accountDiv = file_get_contents('./userAccount.html');
 $adminDiv = file_get_contents('./adminLink.html');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +33,9 @@ $adminDiv = file_get_contents('./adminLink.html');
       </label>   
     </div>
       <div class="layout">
-      <div id="sidenav" class="sidenav">
+        
+      <nav id="sidenav" class="sidenav">        
+        
         <?php
         #Login Handler
         if(!isset($_SESSION['loggedIn'])){
@@ -42,12 +43,12 @@ $adminDiv = file_get_contents('./adminLink.html');
         }else{
           echo $accountDiv; 
           if($_SESSION['admin'] == 1){
-          echo $adminLink;
+          echo $adminDiv;
         }
         }
        
         ?>
-      </div>
+      </nav>
       <main id="main">
         <div id="content">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis debitis
@@ -55,20 +56,8 @@ $adminDiv = file_get_contents('./adminLink.html');
           quaerat molestiae sunt consectetur nostrum facilis. Nesciunt
           repellendus voluptatibus esse?
         </div>
-        <div id="content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis debitis
-          sit eius provident libero quidem minima vero doloremque earum porro,
-          quaerat molestiae sunt consectetur nostrum facilis. Nesciunt
-          repellendus voluptatibus esse?
-        </div>
-        <div id="content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis debitis
-          sit eius provident libero quidem minima vero doloremque earum porro,
-          quaerat molestiae sunt consectetur nostrum facilis. Nesciunt
-          repellendus voluptatibus esse?
-        </div>
       </main>
-    <aside id="content">
+    <aside id="subcontent">
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis debitis
           sit eius provident libero quidem minima vero doloremque earum porro,

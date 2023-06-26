@@ -17,7 +17,6 @@ function passwordVerify($connect, $loginInput){
             $array = [$loginInput, $loginInput];
             $insert = $query->execute($array);
             $hashFetch = $query->fetch();
-            var_dump($insert);
             return $hashFetch;
     } catch (PDOException $e){
         echo 'ERROR: '. $e->getMessage();

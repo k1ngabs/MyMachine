@@ -22,10 +22,10 @@ session_start();
       </div>
     </a>
         <form class="signup" action="components/logic.php" method="post">
-            <p><label for="username">Usuário:</label><br><input type="text" name="username" id="username" required></p>
-            <p><label for="email">Email:</label><br><input type="email" name="email" id="email" required></p>
-            <p><label for="password">Senha:</label><br><input type="password" name="password" id="password" required></p>
-            <p><label for="confirmPassword">Confirmar senha:</label><br><input type="password" name="confirmPassword" id="confirmPassword" required></p>
+            <p><label for="username">Usuário:</label><br><input class="input" type="text" name="username" id="username" required></p>
+            <p><label for="email">Email:</label><br><input class="input" type="email" name="email" id="email" required></p>
+            <p><label for="password">Senha:</label><br><input class="input" type="password" name="password" id="password" required></p>
+            <p><label for="confirmPassword">Confirmar senha:</label><br><input class="input" type="password" name="confirmPassword" id="confirmPassword" required></p>
             <p><button type="submit" name="signup" id="signup">Cadastrar</button></p>
         </form>
     </div>

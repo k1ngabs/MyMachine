@@ -10,7 +10,26 @@ if(isset($_POST['signup'])){
     $crudePassword = $_POST['password'];
     $password = password_hash($crudePassword, PASSWORD_DEFAULT);
     $array = array($user, $email, $password);
-    signUp($connect, $array);
+    $mailValidation = signUp($connect, $array);
+    if($mailValidation)
+        {
+               $hash=md5($email);
+               $link="<a href='localhost/MyMachine/valida_email.php?h=".$hash."'> Clique aqui para confirmar seu cadastro </a>";
+              $mensagem="<tr><td style='padding: 10px 0 10px 0;' align='center' bgcolor='#669999'>";
+              $mensagem.="<img src='cid:logo_ref' style='display: inline; padding: 0 10px 0 10px;' width='10%' />";
+
+               $mensagem.="Email de Confirmação <br>".$link."</td></tr>";
+               $assunto="Confirme seu cadastro";
+
+               $retorno= enviaEmail($email,$nome,$mensagem,$assunto);
+        
+               $_SESSION["msg"]= "Valide o Cadastro no email";
+
+        }
+        else
+        {
+               $_SESSION["msg"].= 'Erro ao inserir <br>';
+        }
     header('location: /mymachine/index.php');
 }
 
@@ -19,7 +38,8 @@ if(isset($_POST['login'])){
     $user= $_POST['loginInput'];
     $password= $_POST['password'];
     $hashVetor= passwordVerify($connect,$user);
-    if(password_verify($password,$hashVetor['password'])){
+    $hashPass = $hashVetor['password'];
+    if(password_verify($password,$hashPass)){
         $userLogged= $hashVetor['userId'];
         session_start();
         $_SESSION['loggedIn'] = true;
@@ -27,6 +47,7 @@ if(isset($_POST['login'])){
         $_SESSION['admin'] = $hashVetor['admin'];
        header('location: /mymachine/index.php');  
     }else{
+        header('location: /mymachine/index.php');
         echo'Senha ou Usuário inválido.';
     }
 }
@@ -35,6 +56,7 @@ if(isset($_POST['login'])){
     if(isset($_POST['logout'])){
         session_start();
         session_destroy();
+        header('location: /mymachine/index.php');
     }
 
     

@@ -8,3 +8,4 @@ function darkmode() {
     var body = document.body;
     body.classList.toggle("darkMode");
   } 
+
