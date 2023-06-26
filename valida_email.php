@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once('includes/logica/funcoes_pessoa.php');
-include_once('includes/logica/conecta.php');
+include_once('includes/components/functions.php');
+include_once('includes/components/connect.php');
 if($_GET['h']){
 	$h=$_GET['h'];
     $_SESSION["msg"]=''; //inicializa msg
@@ -10,14 +10,14 @@ if($_GET['h']){
 	$array = array($h);
 
 
-	$linha=pesquisarPessoaEmail($conexao,$array);
+	$linha=pesquisarPessoaEmail($connect,$array);
 
 	if($linha)
 	{
 
 		$array=array($linha['codpessoa']);
 
-		$retorno=alterarStatustrue($conexao,$array);
+		$retorno=alterarStatustrue($connect,$array);
 		
 		if($retorno)
 		{
@@ -38,6 +38,6 @@ if($_GET['h']){
 		$_SESSION["msg"]= 'Problema na validação';
 	}	
 
-header("Location:login.php");
+header("Location:index.php");
 	
 }

@@ -1,6 +1,7 @@
 <?php
 require_once('connect.php');
 require_once('functions.php');
+require_once('envia_email.php');
 
 #___________________________USER CRUD_____________________#
 #User SignUp
@@ -21,7 +22,7 @@ if(isset($_POST['signup'])){
                $mensagem.="Email de Confirmação <br>".$link."</td></tr>";
                $assunto="Confirme seu cadastro";
 
-               $retorno= enviaEmail($email,$nome,$mensagem,$assunto);
+               $retorno= sendEmail($email,$nome,$mensagem,$assunto);
         
                $_SESSION["msg"]= "Valide o Cadastro no email";
 

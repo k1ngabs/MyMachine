@@ -65,6 +65,40 @@ function updateUser($connect, $inputArray){
     }
 }
 
+function pesquisarPessoaEmail($connect,$array){
+    try {
+
+    $query = $connect->prepare("select * from users where md5(email) = ?");
+    if($query->execute($array)){
+        $pessoa = $query->fetch(); //coloca os dados num array $pessoa
+      if ($pessoa)
+        {  
+            return $pessoa;
+        }
+    else
+        {
+            return false;
+        }
+    }
+    else{
+        return false;
+    }
+     }catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+  }  
+}
+
+function alterarStatustrue($conexao, $array){
+    try {
+        session_start();
+        $query = $conexao->prepare("update users set verified = true where userId = ?");
+        $resultado = $query->execute($array);       
+        return $resultado;
+    }catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+
 #Product Functions#
 
 function insertProd($connect, $prodArray){
