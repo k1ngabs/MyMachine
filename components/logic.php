@@ -22,7 +22,7 @@ if(isset($_POST['signup'])){
                $mensagem.="Email de Confirmação <br>".$link."</td></tr>";
                $assunto="Confirme seu cadastro";
 
-               $retorno= sendEmail($email,$nome,$mensagem,$assunto);
+               $retorno= sendEmail($email,$user,$mensagem,$assunto);
         
                $_SESSION["msg"]= "Valide o Cadastro no email";
 

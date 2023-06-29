@@ -19,12 +19,12 @@ $accountDiv = file_get_contents('./userAccount.html');
     </div>
     <div class="adminBox">
         <div id="productAdmin">
-            <form action="" method="post">
+            <form action="components/logic.php" method="post">
 
             </form>
         </div>
         <div id="catAdmin">
-            <form action="" method="post">
+            <form action="components/logic.php" method="post">
                 
             </form>
         </div>

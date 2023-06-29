@@ -2,4 +2,23 @@
   <form action="components/logic.php" method="post" name="logout">
     <button name="logout" type="submit">Sair</button>
   </form>
+  <div>
+    <?php
+    $user = readUser($connect, $userId);
+
+      if(empty($user)){
+        session_destroy();
+      }else{
+        ?>
+    <section>
+      <p>
+        Bem-Vindo,
+        <?php echo $user['username']; ?>!
+      </p>
+      <p><?php echo $user['email']; ?></p>
+    </section>
+    <?php
+        }
+    ?>
+  </div>
 </div>

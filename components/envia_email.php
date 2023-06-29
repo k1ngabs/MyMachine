@@ -1,10 +1,12 @@
 <?php
 //identificação para a chamada da classe
+    require('..\PHPMailer\src\Exception.php');
+    require('..\PHPMailer\src\PHPMailer.php');
+    require('..\PHPMailer\src\SMTP.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
-require "PHPMailer/src/PHPMailer.php";
-require "PHPMailer/src/SMTP.php";
+
 
 function sendEmail($email, $nome, $mensagem, $assunto, $email_resposta=null)
 {
@@ -62,7 +64,6 @@ $mail->Body = $mensagem;
 
 $mail->isHTML(true);
 
-$mail->AddEmbeddedImage('MyMachine\images\2292112.svg', 'logo_ref');
 
 // Enviando o email
 if (!$mail->send()) {

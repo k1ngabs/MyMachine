@@ -44,16 +44,17 @@ function deleteUser($connect, $userId){
     }
 }
 
-// function readUser($connect, $userId){
-//     try{
-//         $query = $connect->prepare('select * from users where userId = ?');
-//         $user  = $query->execute($userId);
-        
-//         return $user;
-//     }catch(PDOException $e){
-//         echo 'ERROR:'. $e->getMessage();
-//     }
-// }
+function readUser($connect, $userId){
+    try{
+        $query = $connect->prepare('select * from users where userId = ?');
+        $query->execute($userId);
+        $user = $query->fetch();
+        return $user;
+    }catch(PDOException $e){
+        echo 'ERROR:'. $e->getMessage();
+        var_dump($user);
+    }
+}
 
 function updateUser($connect, $inputArray){
     try{

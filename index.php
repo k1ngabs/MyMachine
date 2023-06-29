@@ -1,4 +1,5 @@
 <?php
+include_once('components\functions.php');
 session_start();
 $loginDiv = file_get_contents('./login.html');
 $accountDiv = file_get_contents('./userAccount.html');
@@ -13,7 +14,7 @@ $adminDiv = file_get_contents('./adminLink.html');
     <title>MyMachine</title>
     <link rel="shortcut icon" href="images/2292112.svg" type="image/x-icon">
     <link rel="stylesheet" href="components/style.css" />
-    <script src="scripts/main.js"></script>
+    
   </head>
   <body>
     <div id="header" class="header">
@@ -24,50 +25,75 @@ $adminDiv = file_get_contents('./adminLink.html');
         <div class="search">
             <form action="search" method="get">
             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-            <input placeholder="Search" type="search" class="searchBar">
+            <input placeholder="Search" type="search" class="searchBar" id="search" onkeypress="fetchAndRenderProducts()">
           </form>
         </div>
       <label class="switch">
-        <input onclick="darkmode()" type="checkbox">
+        <input id="darkModeToggle" onclick="darkmode()" type="checkbox" >
         <span class="slider"></span>
       </label>   
     </div>
       <div class="layout">
         
-      <nav id="sidenav" class="sidenav">        
+      <nav id="sidenav" class="sidenav">
         
-        <?php
+          <button type="button" onclick="collapseNav()" class="collapseBtn">Collapse</button>
+        <div id="internNav">
+          <?php
         #Login Handler
         if(!isset($_SESSION['loggedIn'])){
           echo $loginDiv;
-        }else{
-          echo $accountDiv; 
-          if($_SESSION['admin'] == 1){
-          echo $adminDiv;
-        }
-        }
-       
+        }else{?>
+          <div>
+  <form action="components/logic.php" method="post" name="logout">
+    <button name="logout" type="submit">Sair</button>
+  </form>
+  <div>
+    <?php
+      $userId = [$_SESSION['userId']];
+      $user = readUser($connect, $userId);
+
+      if(empty($user)){
+        session_destroy();
+      }else{
         ?>
+          <section>
+            <p>Bem-Vindo, <?php echo $user['username']; ?>!</p>
+            <p><?php echo $user['email']; ?></p>
+          </section>
+        <?php
+          }
+        ?>
+      </div>
+    </div>
+      <?php
+          if($_SESSION['admin'] == 1){
+            echo $adminDiv;
+          }
+        }    
+      ?>
+        </div>       
       </nav>
       <main id="main">
-        <div id="content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis debitis
-          sit eius provident libero quidem minima vero doloremque earum porro,
-          quaerat molestiae sunt consectetur nostrum facilis. Nesciunt
-          repellendus voluptatibus esse?
+        <div class="content" id="maincontent">  
+          <form action="" method="post" id="listProduct">
+          </form>
         </div>
       </main>
-    <aside id="subcontent">
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis debitis
-          sit eius provident libero quidem minima vero doloremque earum porro,
-          quaerat molestiae sunt consectetur nostrum facilis. Nesciunt
-          repellendus voluptatibus esse?
+    <aside  class="content" id="aside">
+    <button type="button" onclick="collapseAside()" class="collapseBtn">Collapse</button>
+        <div  id="productBox" class="productBox">
+  <ul id="productList" class="product-list"></ul>
+        
         </div>
       </aside>
+      <div id="test">
+
+      </div>
     </div>
     <footer>
       <p>By Gabriel Carvalho</p>
     </footer>
   </body>
+  <script src="scripts/main.js"></script>
 </html>

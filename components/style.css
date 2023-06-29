@@ -8,6 +8,7 @@ body {
   font-family: "Poppins", sans-serif;
   background-color: #fff9e6;
   color: black;
+  position: relative;
 }
 
 @media screen and (min-width: 1024px) {
@@ -83,12 +84,20 @@ body {
     height: 1rem;
     padding-top: 10px;
   }
+  /* Abas colapsáveis*/
+  .collapsed {
+    display: none;
+  }
+  .shrinked {
+    transition: 200ms;
+    width: 5%;
+  }
 
   .sidenav {
     flex-wrap: wrap;
     padding: 5px;
-    width: 25%;
-    height: 100vh;
+    max-width: 25%;
+    height: 94vh;
     color: white;
     background-color: #fe2c54;
     box-shadow: rgba(0, 0, 0, 0.16) 0px px 4px;
@@ -108,28 +117,36 @@ body {
   }
   aside {
     display: flex;
+    position: absolute;
     flex-direction: column;
     width: 55%;
     padding: 5px;
     margin: 5px 0px 0px 0px;
     border-radius: 5px 0px 0px 5px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    right: 0;
   }
 
-  #content {
+  .content {
     background-color: white;
-  }
-  #subcontent {
-    background-color: white;
+    color: black;
   }
 
   footer {
     background-color: #fe2c54;
     max-width: 100vw;
     margin: 0px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
+  /* Dark Mode e Light Mode*/
   .darkMode {
-    background-color: rgb(66, 66, 66);
+    background-color: #1e2430;
+  }
+  .darkModeIntern {
+    background-color: #283041;
+    color: white;
   }
 
   /* The switch - the box around the slider */
@@ -184,6 +201,26 @@ body {
   input:checked + .slider:before {
     transform: translateX(100%);
     box-shadow: inset 8px -4px 0px 0px;
+  }
+
+  .productBox {
+    height: 88vh;
+  }
+  .product-list {
+    list-style: none;
+    padding: 0;
+    outline: red 2px solid;
+  }
+  .product-list-item {
+    margin-bottom: 20px;
+    outline: red 2px solid;
+  }
+  .product-list-item img {
+    width: 100px;
+    height: auto;
+  }
+  listProduct {
+    outline: red 2px solid;
   }
 }
 

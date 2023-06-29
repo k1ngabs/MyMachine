@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once('includes/components/functions.php');
-include_once('includes/components/connect.php');
+include_once('components/functions.php');
+include_once('components/connect.php');
 if($_GET['h']){
 	$h=$_GET['h'];
     $_SESSION["msg"]=''; //inicializa msg
@@ -15,7 +15,7 @@ if($_GET['h']){
 	if($linha)
 	{
 
-		$array=array($linha['codpessoa']);
+		$array=array($linha['userId']);
 
 		$retorno=alterarStatustrue($connect,$array);
 		

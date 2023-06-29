@@ -22,6 +22,7 @@ CREATE TABLE product (
     prodId INT AUTO_INCREMENT PRIMARY KEY,
     productName VARCHAR(255) NOT NULL,
     prodCat INT,
+    prodMarca VARCHAR(255),
     FOREIGN KEY (prodCat) REFERENCES category (idCat)
 );
 
