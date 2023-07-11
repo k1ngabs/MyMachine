@@ -103,34 +103,49 @@ function alterarStatustrue($conexao, $array){
 #Product Functions#
 
 function insertProd($connect, $prodArray){
-    try{
-        $query = $connect->prepare('insert into product (name, category) values (?, ?)');
-        $insert = $query->execute($prodArray);
+    try {
+        $query = $connect->prepare('INSERT INTO product (prodId) VALUES (?)');
+        $query->execute($prodArray);
+        $insert = $query->fetch();
         return $insert;
-        }catch(PDOException $e){
-            echo'ERROR:'. $e->getMessage();
-        }
+    } catch(PDOException $e) {
+        echo 'ERROR: ' . $e->getMessage();
+    }
+}
+
+function checkCount($connect, $prodArray){
+    $query = $connect->prepare('SELECT COUNT(*) FROM product WHERE prodId = ?');
+    $query->execute($prodArray);
+    $count = $query->fetch();   
+    if ($count[0] > 0) {
+        // Produto já existe, não inserir dnv
+        return false;
+    }else{ return true;}
 }
 
 function readProd($connect, $prodArray){
     try{
+        $query = $connect->prepare('SELECT (*) FROM product where prodId = ? or prodTitle = ?');
+        $query->execute($prodArray);
+        $select = $query->fetch();
+        return $select;
         }catch(PDOException $e){
             echo'ERROR:'. $e->getMessage();
         }
 }
-function findProdID($connect, $prodName){
-    try{
-        $query = $connect->prepare('select prodId from product where productName = ?');
-        $prodId = $query->execute($prodName);
-        return $prodId;
-        }catch(PDOException $e){
-            echo'ERROR:'. $e->getMessage();
-        }
-}
+// function findProdID($connect, $prodName){
+//     try{
+//         $query = $connect->prepare('select prodId from product where productName = ?');
+//         $prodId = $query->execute($prodName);
+//         return $prodId;
+//         }catch(PDOException $e){
+//             echo'ERROR:'. $e->getMessage();
+//         }
+// }
 
 function updateProd($connect,$inputArray){
     try{
-        $query = $connect->prepare('update product set productName = ?, prodCat = ? where prodId = ?');
+        $query = $connect->prepare('UPDATE product SET prodTitle = ? where prodId = ?');
         $update = $query->execute($inputArray);
         return $update;
     }catch(PDOException $e){
@@ -140,7 +155,7 @@ function updateProd($connect,$inputArray){
 
 function deleteProd($connect,$prodId){
     try{
-        $query= $connect->prepare('delete from product where prodId = ?');
+        $query= $connect->prepare('DELETE FROM product WHERE prodId = ?');
         $delete = $query->execute($prodId);
         return $delete;
     }catch(PDOException $e){
@@ -148,53 +163,48 @@ function deleteProd($connect,$prodId){
     }
 }
 
-#Category Functions
+#____________________________________________________________________________________________________#
 
-function insertCat($connect, $catName){
-    try{
-        $query = $connect->prepare('insert into category (categoryName) values (?)');
-        $insert = $query->execute($catName);
+function createList($connect, $userArray){
+    try {
+        $query= $connect->prepare('INSERT INTO lists (userId) VALUES (?) ');
+        $insert = $query->execute($userArray);
         return $insert;
-    }catch(PDOException $e){
-        echo'ERROR:'. $e->getMessage();
-    }
+        }catch(PDOException $e){
+            echo'ERROR:'. $e->getMessage();
+        }
 }
 
-function readCat($connect, $catArray){
-    try{
-    }catch(PDOException $e){
-        echo'ERROR:'. $e->getMessage();
-    }
+function getNewList($connect, $userArray){
+    try {
+        $query= $connect->prepare('SELECT MAX(listId) FROM lists WHERE userId = (?)');
+        $query->execute($userArray);
+        $select = $query->fetch();
+        return $select;
+        }catch(PDOException $e){
+            echo'ERROR:'. $e->getMessage();
+        }
 }
 
-
-function findCat($connect, $catName){
-    try{
-        $query = $connect->prepare('select idCat from category where categoryName = ?');
-        $search = $query->execute($catName);
-        return $search;
-    }catch(PDOException $e){
-        echo'ERROR:'. $e -> getMessage();
-    }
-}
-function updateCat($connect,$inputArray){
-    try{
-        $query = $connect->prepare('update category set categoryName = ? where idCat = ?');
-        $update = $query->execute($inputArray);
-        return $update;
-    }catch(PDOException $e){
-        echo'ERROR:'. $e->getMessage();
-    }
+function createProdList($connect,$arrayId){
+    try {
+        $query= $connect->prepare('INSERT INTO prodlist (prodId, listId) VALUES (?, ?)');
+        $query->execute($arrayId);
+        $insert = $query->fetch();
+        return $insert;
+        }catch(PDOException $e){
+            echo'ERROR:'. $e->getMessage();
+        }
 }
 
-
-function deleteCat($connect,$idCat){
-    try{
-        $query= $connect->prepare('delete from product where idCat = ?');
-        $delete = $query->execute($idCat);
-        return $delete;
-    }catch(PDOException $e){
-        echo'ERROR:'. $e->getMessage();
-    }
+function readLists($connect, $userId){
+    try {
+        $query= $connect->prepare('SELECT listId FROM lists WHERE userId = ? ');
+        $query->execute($userId);
+        $select = $query->fetch();
+        return $select;
+        }catch(PDOException $e){
+            echo'ERROR:'. $e->getMessage();
+        }
 }
 ?>

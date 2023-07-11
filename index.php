@@ -1,5 +1,6 @@
 <?php
-include_once('components\functions.php');
+include_once('components/functions.php');
+include_once('components/connect.php');
 session_start();
 $loginDiv = file_get_contents('./login.html');
 $accountDiv = file_get_contents('./userAccount.html');
@@ -16,7 +17,7 @@ $adminDiv = file_get_contents('./adminLink.html');
     <link rel="stylesheet" href="components/style.css" />
     
   </head>
-  <body>
+  <body onload="qlqrDesgrassa()">
     <div id="header" class="header">
       <div id="logo">
         <img src="images/2292112.svg" alt="" height="40px">
@@ -29,7 +30,7 @@ $adminDiv = file_get_contents('./adminLink.html');
           </form>
         </div>
       <label class="switch">
-        <input id="darkModeToggle" onclick="darkmode()" type="checkbox" >
+        <input id="darkModeToggle" type="checkbox" >
         <span class="slider"></span>
       </label>   
     </div>
@@ -37,7 +38,12 @@ $adminDiv = file_get_contents('./adminLink.html');
         
       <nav id="sidenav" class="sidenav">
         
-          <button type="button" onclick="collapseNav()" class="collapseBtn">Collapse</button>
+      <input hidden="" class="check-icon" id="check-icon" name="check-icon" type="checkbox" onclick="collapseNav()">
+            <label class="icon-menu" for="check-icon">
+                <div class="cor1 bar bar--1"></div>
+                <div class="cor1 bar bar--2"></div>
+                <div class="cor1 bar bar--3"></div>
+            </label>
         <div id="internNav">
           <?php
         #Login Handler
@@ -45,8 +51,9 @@ $adminDiv = file_get_contents('./adminLink.html');
           echo $loginDiv;
         }else{?>
           <div>
+          <input onclick="collUpdateUser()" checked="checked" type="checkbox">
   <form action="components/logic.php" method="post" name="logout">
-    <button name="logout" type="submit">Sair</button>
+    <button class="genBtn" name="logout" type="submit">Sair</button>
   </form>
   <div>
     <?php
@@ -59,7 +66,6 @@ $adminDiv = file_get_contents('./adminLink.html');
         ?>
           <section>
             <p>Bem-Vindo, <?php echo $user['username']; ?>!</p>
-            <p><?php echo $user['email']; ?></p>
           </section>
         <?php
           }
@@ -72,16 +78,50 @@ $adminDiv = file_get_contents('./adminLink.html');
           }
         }    
       ?>
-        </div>       
+    </div>
+    <div id="updateUser" class="displayN">
+        <form action="components/logic.php" method="post">
+          <label for="username">Usuário:</label><input type="text" name="username" placeholder="<?php echo $user['username']; ?>" required><br>
+          <label for="email">Email:</label><input type="email" name="email" placeholder="<?php echo $user['email']; ?>" required><br>
+          <label for="password">Senha:</label><input type="password" name="password" placeholder="***********" required><br>
+          <button type="submit" name="updateProd">Confirmar</button>
+        </form>
+        <form action="components/logic.php" method="post">
+          <button type="submit" name="deleteUser">Excluir Conta</button>
+        </form>
+    </div>
+    <div class="userLists" id="userLists">
+        <?php
+        if(isset($_SESSION['loggedIn'])){
+          $userList[] = readLists($connect, $userId);
+          foreach($userList as $userList){
+            print_r($userList);
+          }
+        }
+        ?>
+    </div>       
       </nav>
       <main id="main">
-        <div class="content" id="maincontent">  
-          <form action="" method="post" id="listProduct">
-          </form>
+        <div class="content" id="maincontent">
+          <div id="capture">
+            <form action="components/logic.php" method="post" id="listProduct">
+              <?php
+              if(isset($_SESSION['loggedIn'])){?>
+              <button class="genBtn" type="submit" name="savelist">Salvar Lista</button><?php }
+              ?>
+              <button class="genBtn" type="button" onclick="gerarCanva()">Gerar PDF</button>
+              <p id="valorTotal"></p>
+            </form>
+          </div>
         </div>
       </main>
     <aside  class="content" id="aside">
-    <button type="button" onclick="collapseAside()" class="collapseBtn">Collapse</button>
+      
+    <label class="container">
+  <input onclick="collapseAside()" checked="checked" type="checkbox">
+  <div class="checkmark"></div>
+</label>
+    <!-- <button type="button"  class="collapseBtn">Collapse</button> -->
         <div  id="productBox" class="productBox">
   <ul id="productList" class="product-list"></ul>
         
@@ -91,9 +131,11 @@ $adminDiv = file_get_contents('./adminLink.html');
 
       </div>
     </div>
-    <footer>
+    <!-- <footer>
       <p>By Gabriel Carvalho</p>
-    </footer>
+    </footer> -->
   </body>
   <script src="scripts/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </html>

@@ -2,6 +2,7 @@
 require_once('connect.php');
 require_once('functions.php');
 require_once('envia_email.php');
+session_start();
 
 #___________________________USER CRUD_____________________#
 #User SignUp
@@ -94,19 +95,18 @@ if(isset($_POST['login'])){
         insertProd($connect, $prodArray);
     }
 
-// #Read Product
-//     if(isset($_POST['searchProd'])){
-//         $prodName = $_POST['search'];
-//         $infoArray = readUser($connect, $prodName);
-//         #TERMINAR#
-//     }
+#Read Product
+    if(isset($_POST['searchProd'])){
+        $prodInput = [$_POST['search']];
+        $infoArray = readProd($connect, $prodInput);
+        $_SESSION = $infoArray['prodId'];
+        #TERMINAR#
+    }
 
 #Update Product
     if(isset($_POST['updateProd'])){
-        $prodName = $_POST['prodName'];
-        $catName = $_POST['catName'];
-        $idCat = findCat($connect, $catName);
-        $prodId = findProdID($connect, $prodName);
+        $prodInput = $_POST['prodName'];
+        $prodId = readProd($connect, $prodArray);
         $inputArray = [$prodName, $idCat, $prodId];
         updateProd($connect,$inputArray);
     }
@@ -114,35 +114,27 @@ if(isset($_POST['login'])){
 #Delete Product
     if(isset($_POST['deleteProd'])){
         $prodName = $_POST['prodName'];
-        $prodId = findProdID($connect, $prodName);
+        $prodId = readProd($connect, $prodName);
         deleteProd($connect,$prodId);
     }
-
-    #_______________________CATEGORY CRUD________________________#
-
-#Create Category
-if(isset($_POST['catCad'])){
-    $catName = $_POST['catName'];
-    insertCat($connect, $catName);
-}
-
-#Read Category
-    if(isset($_POST['searchCat'])){
-        #TERMINAR      
-    }
-
-#Update Category
-    if(isset($_POST['updateCat'])){
-        $catName = $_POST['catName'];
-        $idCat = findCat($connect, $catName);
-        $inputArray = [$catName, $idCat];
-        updateCat($connect,$inputArray);
-    }
-
-#Delete Category
-    if(isset($_POST['deleteCat'])){
-        $catName = $_POST['catName'];
-        $idCat = findCat($connect, $catName);
-        deleteCat($connect,$idCat);
+    
+    #__________Crud Lista_____________#
+#Create Lista
+    if(isset($_POST['savelist'])){
+        $prodId = $_POST['prodId'];
+        $userId = $_SESSION['userId'];
+        $userArray = [$userId];
+        createList($connect,$userArray);
+        $listId = getNewList($connect,$userArray);
+        foreach($prodId as $prodId){
+            $prodArray = [$prodId];
+            if(checkCount($connect, $prodArray)){
+                insertProd($connect,$prodArray);
+            }
+            $arrayId = [$prodId, $listId[0]];
+            print_r($arrayId);
+            createProdList($connect,$arrayId);
+        }
+        header('location: /mymachine/index.php');
     }
 ?>
